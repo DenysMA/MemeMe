@@ -8,17 +8,15 @@
 
 import UIKit
 
-class MemeCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class MemeCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Setting item size and edit button
+        //Setting edit button
         navigationItem.leftBarButtonItem = editButtonItem()
-        let layout = collectionView.collectionViewLayout as UICollectionViewFlowLayout
-        layout.itemSize = CGSize(width: self.view.frame.width * 0.33, height: self.view.frame.width * 0.33)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -33,6 +31,15 @@ class MemeCollectionViewController: UIViewController, UICollectionViewDelegate, 
         if MemeAPI.sharedInstance().memes.isEmpty {
             presentViewController(storyboard?.instantiateViewControllerWithIdentifier("editor") as UIViewController, animated: true, completion: nil)
         }
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        //Setting dynamic item size
+        let flowLayout = collectionView.collectionViewLayout as UICollectionViewFlowLayout
+        flowLayout.itemSize = CGSize(width: self.view.frame.width * 0.33, height: self.view.frame.width * 0.33)
+        flowLayout.invalidateLayout()
+        collectionView.updateConstraints()
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -73,12 +80,16 @@ class MemeCollectionViewController: UIViewController, UICollectionViewDelegate, 
         
         //Deleting a meme and validating if meme's array is empty after update to redirect to meme Editor screen
         
-        MemeAPI.sharedInstance().memes.removeAtIndex(sender.tag)
-        collectionView.deleteItemsAtIndexPaths([NSIndexPath(forItem: sender.tag, inSection: 0)])
-        if MemeAPI.sharedInstance().memes.isEmpty {
-            editing = false
-            performSegueWithIdentifier("addMeme", sender: nil)
+        let buttonPosition = sender.convertPoint(CGPointZero, toView: collectionView)
+        if let indexPath = collectionView.indexPathForItemAtPoint(buttonPosition) {
+            MemeAPI.sharedInstance().memes.removeAtIndex(indexPath.item)
+            collectionView.deleteItemsAtIndexPaths([NSIndexPath(forItem: sender.tag, inSection: 0)])
+            if MemeAPI.sharedInstance().memes.isEmpty {
+                editing = false
+                performSegueWithIdentifier("addMeme", sender: nil)
+            }
         }
+
     }
     
     override func setEditing(editing: Bool, animated: Bool) {
@@ -105,4 +116,5 @@ class MemeCollectionViewController: UIViewController, UICollectionViewDelegate, 
         }
         
     }
+    
 }
