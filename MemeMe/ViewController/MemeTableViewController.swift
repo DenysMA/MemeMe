@@ -30,7 +30,7 @@ class MemeTableViewController: UIViewController, UITableViewDelegate, UITableVie
         
         // Redirecting to meme editor when there aren't sent memes
         if MemeAPI.sharedInstance().memes.isEmpty {
-            presentViewController(storyboard?.instantiateViewControllerWithIdentifier("editor") as UIViewController, animated: true, completion: nil)
+            presentViewController(storyboard?.instantiateViewControllerWithIdentifier("editor") as! UIViewController, animated: true, completion: nil)
         }
     }
     
@@ -41,7 +41,7 @@ class MemeTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("memeCell", forIndexPath: indexPath) as MemeTableViewCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("memeCell", forIndexPath: indexPath) as! MemeTableViewCell
         let meme = MemeAPI.sharedInstance().memes[indexPath.row] as Meme
         
         //Configuring custom table view cell
@@ -98,8 +98,8 @@ class MemeTableViewController: UIViewController, UITableViewDelegate, UITableVie
         if let identifier = segue.identifier {
             if identifier == "showDetail" {
                 
-                var detailVC = segue.destinationViewController as DetailViewController
-                detailVC.meme = sender as Meme
+                var detailVC = segue.destinationViewController as! DetailViewController
+                detailVC.meme = sender as! Meme
             }
         }
         

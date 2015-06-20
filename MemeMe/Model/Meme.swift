@@ -28,10 +28,10 @@ class Meme : NSObject, NSCoding {
     //MARK: NSCoding implementation
     required init(coder aDecoder: NSCoder) {
         
-        topText = aDecoder.decodeObjectForKey("topText") as String?
-        bottomText = aDecoder.decodeObjectForKey("bottomText") as String?
-        originalImage = aDecoder.decodeObjectForKey("originalImage") as UIImage?
-        editedImage = aDecoder.decodeObjectForKey("editedImage") as UIImage?
+        topText = aDecoder.decodeObjectForKey("topText") as? String
+        bottomText = aDecoder.decodeObjectForKey("bottomText") as? String
+        originalImage = aDecoder.decodeObjectForKey("originalImage") as? UIImage
+        editedImage = aDecoder.decodeObjectForKey("editedImage") as? UIImage
         
     }
     

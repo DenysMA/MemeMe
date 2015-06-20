@@ -46,7 +46,7 @@ class DetailViewController: UIViewController, EditorViewControllerDelegate {
             // Passing meme object to be edited and setting the delegate for EditorVC
             if identifier == "editMeme" {
                 
-                let editorVC = segue.destinationViewController as EditorViewController
+                let editorVC = segue.destinationViewController as! EditorViewController
                 editorVC.delegate = self
                 editorVC.meme = meme
             }

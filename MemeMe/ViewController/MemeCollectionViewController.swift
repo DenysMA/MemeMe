@@ -29,14 +29,14 @@ class MemeCollectionViewController: UIViewController, UICollectionViewDelegate, 
         
         // Redirecting to meme editor when there aren't sent memes
         if MemeAPI.sharedInstance().memes.isEmpty {
-            presentViewController(storyboard?.instantiateViewControllerWithIdentifier("editor") as UIViewController, animated: true, completion: nil)
+            presentViewController(storyboard?.instantiateViewControllerWithIdentifier("editor") as! UIViewController, animated: true, completion: nil)
         }
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         //Setting dynamic item size
-        let flowLayout = collectionView.collectionViewLayout as UICollectionViewFlowLayout
+        let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         flowLayout.itemSize = CGSize(width: self.view.frame.width * 0.33, height: self.view.frame.width * 0.33)
         flowLayout.invalidateLayout()
         collectionView.updateConstraints()
@@ -53,7 +53,7 @@ class MemeCollectionViewController: UIViewController, UICollectionViewDelegate, 
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("memeCell", forIndexPath: indexPath) as MemeCollectionViewCell
+        let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("memeCell", forIndexPath: indexPath) as! MemeCollectionViewCell
         let meme = MemeAPI.sharedInstance().memes[indexPath.item] as Meme
         
         //Configuring custom cell
@@ -110,8 +110,8 @@ class MemeCollectionViewController: UIViewController, UICollectionViewDelegate, 
             
             if identifier == "showDetail" {
                 
-                var detailVC = segue.destinationViewController as DetailViewController
-                detailVC.meme = sender as Meme
+                var detailVC = segue.destinationViewController as! DetailViewController
+                detailVC.meme = sender as! Meme
             }
         }
         

@@ -203,7 +203,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         if self.bottomTextField.editing {
             
             let userInfo = notification.userInfo
-            let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as NSValue
+            let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
             self.view.frame.origin.y -= keyboardSize.CGRectValue().height
         
         }
@@ -215,7 +215,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         if self.bottomTextField.editing {
             
             let userInfo = notification.userInfo
-            let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as NSValue
+            let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
             self.view.frame.origin.y += keyboardSize.CGRectValue().height
 
         }
